@@ -77,13 +77,4 @@ LinkedIn: https://linkedin.com/in/priyanshu-pramanik-422124245
 
 ---
 
-## 💡 One honest improvement (do this next)
 
-Right now your project is good, but:
-
-👉 Add a **screenshot or GIF at the top**  
-It instantly makes it look 2x more professional.
-
-Example (add after title):
-```markdown
-![Game Screenshot](./screenshot.png)
