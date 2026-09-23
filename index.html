@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic Dodger — Hand or Mouse Space Survival</title>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <title>Cosmic Dodger â€” Hand or Mouse Space Survival</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1640029074/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
         :root{--bg:#020210;--panel:rgba(10,15,40,.72);--border:rgba(56,189,248,.25);--cyan:#22d3ee;--gold:#fbbf24;--red:#ef4444;--purple:#a855f7}
@@ -60,7 +60,7 @@
     <canvas id="gameCanvas"></canvas>
     <div id="hud">
         <div class="hud-top">
-            <div class="panel"><div class="score-label">Score</div><div class="score-value" id="scoreDisplay">0</div><div style="font-size:.6rem;color:#64748b;margin-top:2px" id="hudMode">MODE: —</div></div>
+            <div class="panel"><div class="score-label">Score</div><div class="score-value" id="scoreDisplay">0</div><div style="font-size:.6rem;color:#64748b;margin-top:2px" id="hudMode">MODE: â€”</div></div>
             <div class="panel high-score" style="text-align:right"><div class="score-label">High Score</div><div class="score-value" id="highScoreDisplay">0</div><div style="font-size:.6rem;color:#64748b">FPS <span id="fpsHud" style="color:#e2e8f0">--</span></div></div>
         </div>
         <div class="hud-bottom">
@@ -73,12 +73,12 @@
         <h1 class="title-gradient">COSMIC DODGER</h1>
         <p>Pilot the cyan planet through a living cosmos. Dodge debris, comets, satellites & UFOs. You choose how to fly.</p>
         <div class="chooser" id="chooser">
-            <div class="choice" data-mode="hand" id="choiceHand"><div class="icon">🖐️</div><h3>Hand Tracking</h3><p>Camera follows your palm. Low-latency, reticle + spring. Best wow.</p><div style="margin-top:8px;font-size:.65rem;color:var(--cyan)">→ Recommended</div></div>
-            <div class="choice" data-mode="mouse" id="choiceMouse"><div class="icon">🖱️</div><h3>Mouse / Trackpad</h3><p>Precise, instant, no camera. Great for laptop & speedruns.</p></div>
+            <div class="choice" data-mode="hand" id="choiceHand"><div class="icon">ðŸ–ï¸</div><h3>Hand Tracking</h3><p>Camera follows your palm. Low-latency, reticle + spring. Best wow.</p><div style="margin-top:8px;font-size:.65rem;color:var(--cyan)">â†’ Recommended</div></div>
+            <div class="choice" data-mode="mouse" id="choiceMouse"><div class="icon">ðŸ–±ï¸</div><h3>Mouse / Trackpad</h3><p>Precise, instant, no camera. Great for laptop & speedruns.</p></div>
         </div>
-        <div class="hint" id="chosenHint">Pick a control to launch · <span style="color:#94a3b8">You can switch anytime with <b>H</b> / <b>M</b></span></div>
+        <div class="hint" id="chosenHint">Pick a control to launch Â· <span style="color:#94a3b8">You can switch anytime with <b>H</b> / <b>M</b></span></div>
         <button class="game-btn" id="startBtn" disabled style="opacity:.5;pointer-events:none;margin-top:14px">Choose control above</button>
-        <p style="font-size:.7rem;color:#475569;margin-top:10px">Allow camera if you pick Hand · 5 lives · Near miss = +2pts · Difficulty ramps every 10s</p>
+        <p style="font-size:.7rem;color:#475569;margin-top:10px">Allow camera if you pick Hand Â· 5 lives Â· Near miss = +2pts Â· Difficulty ramps every 10s</p>
     </div>
     <div class="overlay hidden" id="gameOverScreen">
         <h1 class="gameover-gradient">GAME OVER</h1>
@@ -99,8 +99,8 @@
         const choiceHand=document.getElementById('choiceHand'), choiceMouse=document.getElementById('choiceMouse'), startBtn=document.getElementById('startBtn'), chosenHint=document.getElementById('chosenHint'), camBox=document.getElementById('cam-box'), hudMode=document.getElementById('hudMode');
         function selectMode(m){
             controlMode=m; choiceHand.classList.toggle('active',m==='hand'); choiceMouse.classList.toggle('active',m==='mouse');
-            startBtn.disabled=false; startBtn.style.opacity='1'; startBtn.style.pointerEvents='auto'; startBtn.textContent=m==='hand'?'Launch with Hand 🖐️':'Launch with Mouse 🖱️';
-            chosenHint.textContent=m==='hand'?'Hand tracking selected — allow camera on launch':'Mouse/Trackpad selected — no camera needed';
+            startBtn.disabled=false; startBtn.style.opacity='1'; startBtn.style.pointerEvents='auto'; startBtn.textContent=m==='hand'?'Launch with Hand ðŸ–ï¸':'Launch with Mouse ðŸ–±ï¸';
+            chosenHint.textContent=m==='hand'?'Hand tracking selected â€” allow camera on launch':'Mouse/Trackpad selected â€” no camera needed';
             camBox.classList.toggle('off', m!=='hand'); hudMode.textContent='MODE: '+(m==='hand'?'HAND':'MOUSE');
             if(m==='hand') camBox.style.opacity='.75'; else camBox.style.opacity='.28';
         }
@@ -151,7 +151,7 @@
             }
         }};
         player.targetX=W/2;player.targetY=H/2;player.x=W/2;player.y=H/2;player.rawX=W/2;player.rawY=H/2;
-        // enemy types — wow factor
+        // enemy types â€” wow factor
         const ENEMY_STYLES=[
             {type:'planet', colors:['#ffffff','#ef4444','#7f1d1d','#000'], glow:'#ef4444'},
             {type:'planet', colors:['#ffffff','#a855f7','#581c87','#000'], glow:'#a855f7'},
@@ -307,7 +307,7 @@
         function startGame(){GAME.state='playing';GAME.lives=5;GAME.score=0;GAME.startTime=performance.now();GAME.difficulty=1;GAME.spawnTimer=0;GAME.invincible=false;GAME.shake=0;enemies=[];explosionParticles=[];shockwaves=[];player.trail=[];updateLivesUI();document.getElementById('scoreDisplay').innerText='0'}
         function endGame(){GAME.state='gameover';SFX.gameOver();let fs=Math.floor(GAME.score);if(fs>GAME.highScore){GAME.highScore=fs;localStorage.setItem('cosmicDodgerHigh',GAME.highScore)}document.getElementById('highScoreDisplay').innerText=GAME.highScore;document.getElementById('finalScore').innerText=fs;document.getElementById('finalHigh').innerText=GAME.highScore;document.getElementById('gameOverScreen').classList.remove('hidden')}
         function restartGame(){document.getElementById('gameOverScreen').classList.add('hidden');enemies=[];explosionParticles=[];shockwaves=[];startCountdown()}
-        // input — chooser aware + low-latency hand
+        // input â€” chooser aware + low-latency hand
         const video=document.getElementById('webcam'); let handActive=false, handLost=0, lastRaw={x:W/2,y:H/2}, handVel={x:0,y:0}, lastHandTime=0;
         let rawTarget={x:W/2,y:H/2};
         function onHandResults(res){
@@ -326,13 +326,13 @@
                 document.getElementById('fpsHud').textContent= Math.round(1000/Math.max(1,now-lastHandTime));
                 lastHandTime=now;
             } else {
-                handLost++; if(handLost>10){handActive=false}
+                handLost++; if(handLost>5){handActive=false}
             }
         }
         const hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`});
         hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
         hands.onResults(onHandResults);
-        // mouse/trackpad — instant, precise
+        // mouse/trackpad â€” instant, precise
         addEventListener('mousemove',e=>{
             if(controlMode==='hand' && handActive) return;
             if(controlMode===null) return;
@@ -391,3 +391,4 @@
     </script>
 </body>
 </html>
+
